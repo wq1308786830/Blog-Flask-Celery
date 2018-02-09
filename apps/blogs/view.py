@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/python
-
-from flask import render_template
-
+import os
+from flask import render_template, request
+from werkzeug import secure_filename
 from application import db
 from apps.models.models import User
+from apps.tools import JSON
 from . import blog
 
 __author__ = 'Russell'
+
+BLOG_IMG_UPLOAD_FOLDER = 'static/uploads/blog_images/'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
 @blog.route("/")
@@ -36,10 +40,30 @@ def add_query(user_id, user_name):
     return render_template("index.html")
 
 
+@blog.route('/1.0/manage/uploadBlgImg', methods=['GET', 'POST'])
+def upload_blg_img():
+    """
+    receive blog editor's uploaded image.
+    :return:
+    """
+    filename = None
+    if request.method == 'POST':
+        file = request.files['image']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(BLOG_IMG_UPLOAD_FOLDER, filename))
+    return JSON.dumps({'success': True, 'data': {'link': 'http://localhost:8001/' + BLOG_IMG_UPLOAD_FOLDER + filename}})
+
+
 @blog.route('/run_girl')
 def run_girl():
     """
-    svg跑步的小女孩
+    svg running girl
     :return:
     """
     return render_template('bezier_running_girl.html')
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS

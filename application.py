@@ -4,6 +4,7 @@
 import os
 
 from flask import Flask, json
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 from apps.tasks import make_celery
@@ -75,6 +76,7 @@ def config_celery(app):
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     config_file = os.path.abspath(os.path.join(PROJECT_PATH, 'etc/config.py'))
 
     app.config.from_pyfile(config_file)
