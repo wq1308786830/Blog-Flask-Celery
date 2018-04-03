@@ -12,7 +12,7 @@ __author__ = 'Russell'
 
 blog = Blueprint('blog', __name__)
 
-IMG_SERVER = 'http://http://104.156.250.95:7001/'
+IMG_SERVER = 'http://104.156.250.95:7001/'
 BLOG_IMG_UPLOAD_FOLDER = 'static/uploads/blog_images/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
