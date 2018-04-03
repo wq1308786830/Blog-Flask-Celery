@@ -7,4 +7,4 @@ __author__ = 'Russell'
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(host="localhost", port=8001)
+    app.run(host="127.0.0.1", port=7000)

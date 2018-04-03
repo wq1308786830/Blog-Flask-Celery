@@ -10,7 +10,6 @@ __author__ = 'Russell'
 
 reload(sys)
 
-WEIXIN_DEBUG = False
 DEBUG = not os.path.exists("/var/www/xmjdw")
 
 # Mysql
@@ -51,9 +50,5 @@ else:
 """
     通用配置
 """
-VERIFY_EMAIL = False
 JSON_AS_ASCII = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SECRET_KEY = "flskt19472kfirdibofneictoqKDIVME"
-
-MIPUSH_SECRET = "WaaQ+3EWcOE63Dg0Gbs4AQ=="

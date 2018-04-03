@@ -18,7 +18,7 @@ def config_log(app):
     import logging
     from logging.handlers import RotatingFileHandler
 
-    format = '[%(asctime)s %(levelname)s]: %(message)s [in %(pathname)s:%(lineno)d]'
+    format_str = '[%(asctime)s %(levelname)s]: %(message)s [in %(pathname)s:%(lineno)d]'
     log_file = app.config.get("LOG_FILE")
     if log_file:
         handler = RotatingFileHandler(
@@ -26,13 +26,13 @@ def config_log(app):
             maxBytes=10000,
             backupCount=10,
         )
-        handler.setFormatter(logging.Formatter(format))
+        handler.setFormatter(logging.Formatter(format_str))
         app.logger.addHandler(handler)
 
     debug = app.debug
     if not debug:
         handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter(format))
+        handler.setFormatter(logging.Formatter(format_str))
         app.logger.addHandler(handler)
         app.logger.setLevel(logging.WARN)
 
@@ -57,7 +57,7 @@ def config_route(app):
     :return:
     """
     common_prefix = ''
-    from apps.blogs import blog as blog_blueprint
+    from apps.blog.view import blog as blog_blueprint
     app.register_blueprint(blog_blueprint, url_prefix=common_prefix)
 
     @app.errorhandler(400)
@@ -86,6 +86,6 @@ def create_app():
     config_route(app)
     db.init_app(app)
 
-    app.logger.info("app准备好了")
+    app.logger.warn("application is ready!")
 
     return app

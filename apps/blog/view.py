@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/python
+import json
 import os
 from flask import render_template, request
 from werkzeug import secure_filename
 from application import db
 from apps.models.models import User
-from apps.tools import JSON
-from . import blog
+from flask import Blueprint
 
 __author__ = 'Russell'
 
+blog = Blueprint('blog', __name__)
+
+IMG_SERVER = 'http://http://104.156.250.95:7001/'
 BLOG_IMG_UPLOAD_FOLDER = 'static/uploads/blog_images/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -52,7 +55,7 @@ def upload_blg_img():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(BLOG_IMG_UPLOAD_FOLDER, filename))
-    return JSON.dumps({'success': True, 'data': {'link': 'http://localhost:8001/' + BLOG_IMG_UPLOAD_FOLDER + filename}})
+    return json.dumps({'success': True, 'data': {'link': IMG_SERVER + BLOG_IMG_UPLOAD_FOLDER + filename}})
 
 
 @blog.route('/run_girl')
