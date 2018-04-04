@@ -64,7 +64,7 @@ def run_girl():
     svg running girl
     :return:
     """
-    return render_template('bezier_running_girl.html')
+    return render_template('user/bezier_running_girl.html')
 
 
 def allowed_file(filename):
