@@ -20,11 +20,19 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 @blog.route("/")
 def index():
     """
-
     :return:
     """
 
     return render_template("index.html")
+
+
+@blog.route("/user")
+def user():
+    """
+    :return:
+    """
+
+    return render_template("user/index.html")
 
 
 @blog.route("/<user_id>&<user_name>")
@@ -40,7 +48,7 @@ def add_query(user_id, user_name):
     user = User(id=user_id, name=user_name)
     db.session.add(user)
     db.session.commit()
-    return render_template("index.html")
+    return render_template("user/index.html")
 
 
 @blog.route('/1.0/manage/uploadBlgImg', methods=['GET', 'POST'])
